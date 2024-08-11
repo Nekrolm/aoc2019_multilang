@@ -2041,6 +2041,12 @@ match v1, v2 with
 | _, _ => false
 end.
 
+Definition neq_vertex (v1 v2: vertex) := negb (eq_vertex v1 v2).
+
+Infix "=" := eq_vertex (at level 70, no associativity).
+Infix "<>" := neq_vertex (at level 70, no associativity).
+
+
 
 Definition next (v: vertex) : list vertex := 
 match v with
@@ -4093,10 +4099,10 @@ Fixpoint Solve (max_d: nat) (start: vertex) (acc_d: N) :N :=
 Fixpoint traverse (max_d: nat) (cur: vertex) (prev: vertex) (dest: vertex): N :=
     match max_d with
     | 0 => 99999%N
-    | S d => if eq_vertex cur dest then
+    | S d => if cur = dest then
                 0%N
              else
-                let next_vert_list := filter (fun v => negb (eq_vertex v prev)) (adjucent cur) in
+                let next_vert_list := filter (fun v => v <> prev) (adjucent cur) in
                     let steps := map (fun v => traverse d v cur dest) next_vert_list in
                     1 + fold_right N.min 99999%N steps
     end.
