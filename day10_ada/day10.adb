@@ -248,10 +248,7 @@ procedure day10 is
    M: Meteors_Vector;
    Answer: Natural := 0;
 begin
-      -- Call the function to read the grid from a file named "grid.txt"
    M := Read_Grid_From_File("grid.txt");
-
-
 
    for P of M loop
       Answer := Natural'Max(CountVisibleFrom(P, M), Answer);   
