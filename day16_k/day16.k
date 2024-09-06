@@ -2,18 +2,6 @@ input : "59709511599794439805414014219880358445064269099345553494818286560304063
 
 digits: (_ic input) - (_ic "0")
 
-/ inputLen: #digits
-
-/ makePattern: {[x] 1 _ (inputLen + 1) # (adjustPattern x) }
-
-/ calculateAt: {[x] +/ (digits * (makePattern x)) }
-
-/ indexes: (!# digits) + 1
-
-/ fft: {[x] (_abs' calculateAt' x) ! 10}
-
-/ result: fft indexes
-
 pattern : 0 1 0 -1 
 adjustPattern: {[x] ,/ (x #' pattern) }
 
@@ -26,5 +14,20 @@ f: {[x]
     fft: {[x] (_abs' calculateAt' x) ! 10};
     fft indexes}
 
+/ Part 1
 do[100; digits: f digits]
+`0:"part 1\n"
+8 # digits
 
+/ Part 2
+
+ofs: 0$7#input
+digits: (_ic input) - (_ic "0")
+digits: ofs _ (((#digits) * 10000) # digits)
+
+g: {[x] (|(+\ (|x))) ! 10}
+
+do[100; digits: g digits]
+
+`0:"part 2\n"
+8 # digits
